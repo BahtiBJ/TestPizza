@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">TestPizza</string>
+
+    <string name="price">от %1$d р.</string>
+
+    <string name="pizza_name_example_1">Ветчина и грибы</string>
+    <string name="pizza_describtion_example_1">Ветчина,шампиньоны, увеличинная порция моцареллы, томатный соус</string>
+    <string name="pizza_name_example_2">Баварские колбаски</string>
+    <string name="pizza_describtion_example_2">Баварские колбаски, ветчина,пикантная пепперони, острая чоризо,томатный соус</string>
+
+    <string name="menu">Меню</string>
+
+    <string name="product_category_pizza">Пицца</string>
+    <string name="product_category_combo">Комбо</string>
+    <string name="product_category_dessert">Десерты</string>
+    <string name="product_category_drink">Напитки</string>
+
+</resources>

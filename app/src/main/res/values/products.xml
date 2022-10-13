@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="products">
+        <item>Пицца</item>
+        <item>Комбо</item>
+        <item>Десерты</item>
+        <item>Напитки</item>
+    </string-array>
+
+</resources>

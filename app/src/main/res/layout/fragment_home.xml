@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_banner_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/default_vertical_margin"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck"
+        tools:listitem="@layout/item_banner_list" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/home_products_choice"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingStart="@dimen/default_horizontal_margin"
+        app:singleLine="true"
+        android:paddingVertical="@dimen/default_vertical_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_banner_list"
+        tools:ignore="RtlSymmetry">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/home_chip_pizza"
+            style="@style/home_chip_style"
+            android:text="@string/product_category_pizza"
+            tools:ignore="TextContrastCheck,TextContrastCheck" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/home_chip_combo"
+            style="@style/home_chip_style"
+            android:text="@string/product_category_combo"
+            tools:ignore="TextContrastCheck,TextContrastCheck" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/home_chip_dessert"
+            style="@style/home_chip_style"
+            android:text="@string/product_category_dessert"
+            tools:ignore="TextContrastCheck,TextContrastCheck" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/home_chip_drink"
+            style="@style/home_chip_style"
+            android:text="@string/product_category_drink"
+            tools:ignore="TextContrastCheck,TextContrastCheck" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_products_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_product_list"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_products_choice" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

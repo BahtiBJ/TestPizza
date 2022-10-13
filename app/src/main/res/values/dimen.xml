@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="header_text_size">25sp</dimen>
+    <dimen name="hint_text_size">15sp</dimen>
+    <dimen name="button_text_size">20sp</dimen>
+
+    <dimen name="banner_width">260dp</dimen>
+    <dimen name="banner_height">100dp</dimen>
+
+    <dimen name="product_preview_size">150dp</dimen>
+
+
+    <dimen name="default_horizontal_margin">20dp</dimen>
+    <dimen name="default_vertical_margin">20dp</dimen>
+
+</resources>

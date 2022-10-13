@@ -1,0 +1,32 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.TestPizza" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/black</item>
+
+        <item name="colorSecondary">@color/rose_light</item>
+        <item name="colorOnSecondary">@color/rose</item>
+
+        <item name="android:colorAccent">@color/rose</item>
+
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
+
+        <item name="android:windowBackground">@color/gray_light</item>
+    </style>
+
+    <style name="roundedImageViewRounded" parent="">
+        <item name="cornerSize">10%</item>
+    </style>
+
+    <style name="home_chip_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="chipStartPadding">10dp</item>
+        <item name="chipEndPadding">10dp</item>
+        <item name="chipBackgroundColor">@color/rose_light</item>
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:textColor">@color/rose</item>
+    </style>
+</resources>

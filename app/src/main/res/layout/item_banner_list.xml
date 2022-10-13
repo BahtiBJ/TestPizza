@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/item_banner_image"
+        android:layout_width="@dimen/banner_width"
+        android:layout_height="@dimen/banner_height"
+        android:layout_marginStart="@dimen/default_horizontal_margin"
+        android:background="@drawable/round_corners_rect"
+        android:src="@drawable/banner_1"
+        android:scaleType="fitXY"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"/>
+
+</FrameLayout>

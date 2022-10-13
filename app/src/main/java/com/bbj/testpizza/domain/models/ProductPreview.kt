@@ -1,4 +1,4 @@
-package com.bbj.testpizza.domain
+package com.bbj.testpizza.domain.models
 
 data class ProductPreview(
     val name: String,

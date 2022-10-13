@@ -1,4 +1,4 @@
-package com.bbj.testpizza.domain
+package com.bbj.testpizza.domain.models
 
 enum class ProductType{
     PIZZA,

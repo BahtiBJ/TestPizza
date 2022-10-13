@@ -28,5 +28,6 @@
         <item name="chipStrokeWidth">0dp</item>
         <item name="android:textSize">15dp</item>
         <item name="android:textColor">@color/rose</item>
+        <item name="android:enabled">false</item>
     </style>
 </resources>

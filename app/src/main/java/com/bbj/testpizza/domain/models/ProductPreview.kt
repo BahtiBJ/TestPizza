@@ -7,3 +7,4 @@ data class ProductPreview(
     val price: Int,
     val type : ProductType
 )
+

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layoutDescription="@xml/fragment_home_scene">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_banner_list"
@@ -22,12 +23,12 @@
         android:id="@+id/home_products_choice"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingStart="@dimen/default_horizontal_margin"
-        app:singleLine="true"
         android:paddingVertical="@dimen/default_vertical_margin"
+        android:paddingStart="@dimen/default_horizontal_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/home_banner_list"
+        app:singleLine="true"
         tools:ignore="RtlSymmetry">
 
         <com.google.android.material.chip.Chip
@@ -61,11 +62,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_product_list"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_products_choice" />
+        app:layout_constraintTop_toBottomOf="@id/home_products_choice"
+        tools:listitem="@layout/item_product_list" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

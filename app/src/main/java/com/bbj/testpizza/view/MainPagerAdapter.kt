@@ -1,4 +1,4 @@
-package com.bbj.testpizza
+package com.bbj.testpizza.view
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

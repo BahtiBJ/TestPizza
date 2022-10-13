@@ -1,11 +1,13 @@
-package com.bbj.testpizza
+package com.bbj.testpizza.view
 
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.viewpager2.widget.ViewPager2
+import com.bbj.testpizza.R
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -40,5 +42,7 @@ class MainActivity : AppCompatActivity() {
         // Current city
         val currentCity = findViewById<TextView>(R.id.toolbar_current_city)
 
+        //QR button
+        val qrScan = findViewById<ImageButton>(R.id.toolbar_qr)
     }
 }

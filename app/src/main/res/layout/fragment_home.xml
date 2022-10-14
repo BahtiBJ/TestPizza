@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_root"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -19,15 +20,20 @@
         tools:ignore="SpeakableTextPresentCheck"
         tools:listitem="@layout/item_banner_list" />
 
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/home_products_choice"
+    <HorizontalScrollView
+        android:id="@+id/home_chips_scroll"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingVertical="@dimen/default_vertical_margin"
-        android:paddingStart="@dimen/default_horizontal_margin"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_banner_list"
+        app:layout_constraintTop_toBottomOf="@id/home_banner_list">
+
+    <com.google.android.material.chip.ChipGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/default_vertical_margin"
+        android:paddingHorizontal="@dimen/default_horizontal_margin"
         app:singleLine="true"
         tools:ignore="RtlSymmetry">
 
@@ -57,6 +63,8 @@
 
     </com.google.android.material.chip.ChipGroup>
 
+    </HorizontalScrollView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_products_list"
         android:layout_width="match_parent"
@@ -65,7 +73,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_products_choice"
+        app:layout_constraintTop_toBottomOf="@id/home_chips_scroll"
         tools:listitem="@layout/item_product_list" />
 
 

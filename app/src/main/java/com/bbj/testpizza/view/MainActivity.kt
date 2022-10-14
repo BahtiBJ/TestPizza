@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> {}
             }
-        }
+        }.attach()
 
         // Choose city
         val cityChoice = findViewById<LinearLayoutCompat>(R.id.toolbar_city_choice)

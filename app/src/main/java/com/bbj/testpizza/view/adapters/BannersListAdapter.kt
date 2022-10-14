@@ -1,6 +1,7 @@
 package com.bbj.testpizza.view.adapters
 
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,8 @@ class BannersListAdapter(context: Context, private val onBannerClick: OnBannerCl
 
     fun setList(list: List<BannerModel>) {
         // TODO - Add DiffUtil
-        bannersList = list as ArrayList<BannerModel>
+        bannersList.clear()
+        bannersList.addAll(list)
         notifyDataSetChanged()
     }
 
@@ -45,12 +47,22 @@ class BannersListAdapter(context: Context, private val onBannerClick: OnBannerCl
         private val imageView = view.findViewById<ShapeableImageView>(R.id.item_banner_image)
 
         fun bind(position: Int) {
-            Picasso.get()
-                .load(bannersList[position].imagePath)
-                .placeholder(R.color.white)
-                .error(R.color.white)
-                .fit()
-                .into(imageView)
+            val path = bannersList[position].imagePath
+            if (path.startsWith("drawable")){
+                Picasso.get()
+                    .load(Uri.parse(path))
+                    .placeholder(R.color.white)
+                    .error(R.color.white)
+                    .fit()
+                    .into(imageView)
+            } else {
+                Picasso.get()
+                    .load(path)
+                    .placeholder(R.color.white)
+                    .error(R.color.white)
+                    .fit()
+                    .into(imageView)
+            }
             itemView.setOnClickListener {
                 onBannerClick.clickBanner(position)
             }

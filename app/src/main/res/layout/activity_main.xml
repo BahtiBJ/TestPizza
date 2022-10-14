@@ -21,6 +21,8 @@
             android:id="@+id/toolbar_city_choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
             android:orientation="horizontal">
 
             <TextView
@@ -46,6 +48,8 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@android:color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:clickable="true"
             android:layout_marginEnd="10dp"
             android:layout_gravity="end"
             android:src="@drawable/ic_baseline_qr_code_scanner_24"
@@ -72,11 +76,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:tabMinWidth="120dp"
         app:tabBackground="@color/gray_light"
         app:tabIconTint="@color/rose"
         app:tabIndicatorColor="@color/rose"
         app:tabIndicatorGravity="top"
         app:tabIndicatorHeight="4dp"
+        app:tabIndicatorFullWidth="true"
         app:tabMode="fixed"
         app:tabTextColor="@color/rose"
         tools:ignore="SpeakableTextPresentCheck" />

@@ -1,6 +1,7 @@
 package com.bbj.testpizza.view.adapters
 
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,12 +52,22 @@ class ProductListAdapter(context: Context, private val onProductClick: OnProduct
 
         fun bind(position: Int) {
             val product = productList[position]
-            Picasso.get()
-                .load(product.posterPath)
-                .placeholder(R.color.white)
-                .error(R.color.white)
-                .fit()
-                .into(productImage)
+            val path = product.posterPath
+            if (path.startsWith("drawable")){
+                Picasso.get()
+                    .load(Uri.parse(path))
+                    .placeholder(R.color.white)
+                    .error(R.color.white)
+                    .fit()
+                    .into(productImage)
+            } else {
+                Picasso.get()
+                    .load(path)
+                    .placeholder(R.color.white)
+                    .error(R.color.white)
+                    .fit()
+                    .into(productImage)
+            }
 
             productName.text = product.name
             productDescribtion.text = product.describtion

@@ -2,6 +2,7 @@ package com.bbj.testpizza.view
 
 import android.os.Bundle
 import android.view.View
+import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bbj.testpizza.R
 import com.bbj.testpizza.domain.models.ProductType
@@ -31,6 +32,7 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val motionRoot = view.findViewById<MotionLayout>(R.id.home_root)
 
         val bannersList = view.findViewById<RecyclerView>(R.id.home_banner_list)
         val bannersAdapter = BannersListAdapter(requireContext(), onBannerClick)
@@ -52,21 +54,25 @@ class HomeFragment : BaseFragment() {
 
         val pizzaChip = view.findViewById<Chip>(R.id.home_chip_pizza)
         pizzaChip.setOnClickListener {
+            motionRoot.transitionToEnd()
             scrollToProductType(ProductType.PIZZA)
         }
 
         val comboChip = view.findViewById<Chip>(R.id.home_chip_combo)
         comboChip.setOnClickListener {
+            motionRoot.transitionToEnd()
             scrollToProductType(ProductType.COMBO)
         }
 
         val dessertChip = view.findViewById<Chip>(R.id.home_chip_dessert)
         dessertChip.setOnClickListener {
+            motionRoot.transitionToEnd()
             scrollToProductType(ProductType.DESSERT)
         }
 
         val drinkChip = view.findViewById<Chip>(R.id.home_chip_drink)
         drinkChip.setOnClickListener {
+            motionRoot.transitionToEnd()
             scrollToProductType(ProductType.DRINK)
         }
 
@@ -103,6 +109,7 @@ class HomeFragment : BaseFragment() {
 
         homeViewModel.requestBannersList()
         homeViewModel.requestProductList()
+//        TODO() - motion layout transit  chips choose one  scroll problems offline mode
     }
 
     private var pizzaStartIndex = -1

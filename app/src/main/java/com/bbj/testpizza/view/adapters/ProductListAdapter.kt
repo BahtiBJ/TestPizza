@@ -1,7 +1,6 @@
 package com.bbj.testpizza.view.adapters
 
 import android.content.Context
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bbj.testpizza.R
 import com.bbj.testpizza.domain.models.ProductPreview
+import com.bumptech.glide.Glide
 import com.google.android.material.button.MaterialButton
-import com.squareup.picasso.Picasso
 
 class ProductListAdapter(context: Context, private val onProductClick: OnProductClick) :
     RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
@@ -25,9 +24,15 @@ class ProductListAdapter(context: Context, private val onProductClick: OnProduct
     private var productList = arrayListOf<ProductPreview>()
 
     fun setList(list: List<ProductPreview>) {
-        // TODO - Add DiffUtil
+        clearList()
         productList = list as ArrayList<ProductPreview>
-        notifyDataSetChanged()
+        notifyItemRangeInserted(0,list.size)
+    }
+
+    private fun clearList(){
+        val oldSize = productList.size
+        productList.clear()
+        notifyItemRangeRemoved(0,oldSize)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -52,22 +57,13 @@ class ProductListAdapter(context: Context, private val onProductClick: OnProduct
 
         fun bind(position: Int) {
             val product = productList[position]
+
             val path = product.posterPath
-            if (path.startsWith("drawable")){
-                Picasso.get()
-                    .load(Uri.parse(path))
-                    .placeholder(R.color.white)
-                    .error(R.color.white)
-                    .fit()
-                    .into(productImage)
-            } else {
-                Picasso.get()
-                    .load(path)
-                    .placeholder(R.color.white)
-                    .error(R.color.white)
-                    .fit()
-                    .into(productImage)
-            }
+            Glide.with(itemView.context)
+                .load(path)
+                .error(R.color.white_dark)
+                .fitCenter()
+                .into(productImage)
 
             productName.text = product.name
             productDescribtion.text = product.describtion

@@ -10,6 +10,8 @@
 
     <string name="menu">Меню</string>
 
+    <string name="error_notification">Возникла ошибка при получении данных.\nЗагружаем сохраненную информацию.</string>
+
     <string name="product_category_pizza">Пицца</string>
     <string name="product_category_combo">Комбо</string>
     <string name="product_category_dessert">Десерты</string>

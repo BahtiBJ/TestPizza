@@ -1,18 +1,27 @@
 package com.bbj.testpizza.view
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.viewpager2.widget.ViewPager2
 import com.bbj.testpizza.R
 import com.bbj.testpizza.view.adapters.MainPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),LoadingIndicator {
+
+    private val errorNotification by lazy {
+        findViewById<TextView>(R.id.main_notification)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -45,5 +54,44 @@ class MainActivity : AppCompatActivity() {
 
         //QR button
         val qrScan = findViewById<ImageButton>(R.id.toolbar_qr)
+    }
+
+
+    private val hideErrorAnim by lazy {
+        errorNotification.animate().apply {
+            duration = 500
+            interpolator = FastOutSlowInInterpolator()
+            translationY(250f)
+            setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator?) {
+                    errorNotification.visibility = View.GONE
+                }
+            })
+        }
+    }
+
+    private val showErrorAnim by lazy {
+        errorNotification.animate().apply {
+            duration = 500
+            interpolator = FastOutSlowInInterpolator()
+            translationY(0f)
+            setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationStart(animation: Animator?) {
+                    errorNotification.visibility = View.VISIBLE
+                }
+            })
+        }
+    }
+
+    override fun showErrorNotification() {
+        showErrorAnim.startDelay = 5000
+        showErrorAnim.start()
+        hideErrorAnim.startDelay = 10000
+        hideErrorAnim.start()
+
+    }
+
+    override fun hideErrorNotification() {
+        hideErrorAnim.start()
     }
 }

@@ -1,15 +1,14 @@
 package com.bbj.testpizza.view.adapters
 
 import android.content.Context
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bbj.testpizza.R
 import com.bbj.testpizza.domain.models.BannerModel
+import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
-import com.squareup.picasso.Picasso
 
 class BannersListAdapter(context: Context, private val onBannerClick: OnBannerClick) :
     RecyclerView.Adapter<BannersListAdapter.ViewHolder>() {
@@ -23,10 +22,15 @@ class BannersListAdapter(context: Context, private val onBannerClick: OnBannerCl
     private var bannersList = arrayListOf<BannerModel>()
 
     fun setList(list: List<BannerModel>) {
-        // TODO - Add DiffUtil
-        bannersList.clear()
+        clearList()
         bannersList.addAll(list)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(0,list.size)
+    }
+
+    private fun clearList(){
+        val oldSize = bannersList.size
+        bannersList.clear()
+        notifyItemRangeRemoved(0,oldSize)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -48,21 +52,12 @@ class BannersListAdapter(context: Context, private val onBannerClick: OnBannerCl
 
         fun bind(position: Int) {
             val path = bannersList[position].imagePath
-            if (path.startsWith("drawable")){
-                Picasso.get()
-                    .load(Uri.parse(path))
-                    .placeholder(R.color.white)
-                    .error(R.color.white)
-                    .fit()
-                    .into(imageView)
-            } else {
-                Picasso.get()
-                    .load(path)
-                    .placeholder(R.color.white)
-                    .error(R.color.white)
-                    .fit()
-                    .into(imageView)
-            }
+            Glide.with(itemView.context)
+                .load(path)
+                .error(R.color.white_dark)
+                .fitCenter()
+                .into(imageView)
+
             itemView.setOnClickListener {
                 onBannerClick.clickBanner(position)
             }

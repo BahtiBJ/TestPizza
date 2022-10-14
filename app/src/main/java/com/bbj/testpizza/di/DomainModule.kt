@@ -9,7 +9,7 @@ import org.koin.dsl.module
 val domainModule = module {
 
     factory<MenuRepository> {
-        FakeMenuRepositoryImpl()
+        FakeMenuRepositoryImpl(get())
     }
 
     factory {

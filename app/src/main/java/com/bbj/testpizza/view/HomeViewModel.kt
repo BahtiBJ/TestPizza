@@ -27,17 +27,17 @@ class HomeViewModel(
     val bannersList: LiveData<StateModel<List<BannerModel>>>
         get() = _bannersList
 
-    fun requestProductList() {
+    fun requestProductList(isOnline : Boolean) {
         requestData<ArrayList<ProductPreview>>(_productList) {
-            val products = fetchProductsUseCase.execute()
+            val products = fetchProductsUseCase.execute(isOnline)
             calculateStartIndices(products)
             products
         }
     }
 
-    fun requestBannersList() {
+    fun requestBannersList(isOnline : Boolean) {
         requestData<List<BannerModel>>(_bannersList) {
-            fetchBannersUseCase.execute()
+            fetchBannersUseCase.execute(isOnline)
         }
     }
 

@@ -4,8 +4,11 @@ import com.bbj.testpizza.domain.models.ProductPreview
 
 class FetchProductsUseCase(private val menuRepository: MenuRepository) {
 
-    suspend fun execute(): ArrayList<ProductPreview> {
-        val productList = menuRepository.fetchMenu()
+    suspend fun execute(isOnline: Boolean): ArrayList<ProductPreview> {
+        val productList = if (isOnline)
+            menuRepository.fetchMenu()
+        else
+            menuRepository.getCachedMenu()
         productList.sortBy { it.type }
         return productList
     }

@@ -69,7 +69,7 @@
 
             <CustomAttribute
                 motion:attributeName="backgroundColor"
-                motion:customColorValue="@color/white"/>
+                motion:customColorValue="@color/white_dark"/>
 
             <CustomAttribute
                 motion:attributeName="elevation"

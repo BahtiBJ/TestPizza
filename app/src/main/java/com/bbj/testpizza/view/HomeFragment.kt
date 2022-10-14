@@ -1,11 +1,14 @@
 package com.bbj.testpizza.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bbj.testpizza.R
 import com.bbj.testpizza.domain.models.ProductType
+import com.bbj.testpizza.util.isOnline
 import com.bbj.testpizza.view.adapters.BannersListAdapter
 import com.bbj.testpizza.view.adapters.ProductListAdapter
 import com.google.android.material.chip.Chip
@@ -13,9 +16,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment() {
 
+    private val NOT_INIT = -1
+
     override val layoutId: Int = R.layout.fragment_home
 
     private val homeViewModel by viewModel<HomeViewModel>()
+
+    private var loadingIndicator: LoadingIndicator? = null
 
     private val productList by lazy { view?.findViewById<RecyclerView>(R.id.home_products_list) }
     private val onProductClick = object : ProductListAdapter.OnProductClick {
@@ -28,6 +35,11 @@ class HomeFragment : BaseFragment() {
         override fun clickBanner(position: Int) {
             //Handle click on banner
         }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        loadingIndicator = context as LoadingIndicator
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,28 +65,13 @@ class HomeFragment : BaseFragment() {
         }
 
         val pizzaChip = view.findViewById<Chip>(R.id.home_chip_pizza)
-        pizzaChip.setOnClickListener {
-            motionRoot.transitionToEnd()
-            scrollToProductType(ProductType.PIZZA)
-        }
 
         val comboChip = view.findViewById<Chip>(R.id.home_chip_combo)
-        comboChip.setOnClickListener {
-            motionRoot.transitionToEnd()
-            scrollToProductType(ProductType.COMBO)
-        }
 
         val dessertChip = view.findViewById<Chip>(R.id.home_chip_dessert)
-        dessertChip.setOnClickListener {
-            motionRoot.transitionToEnd()
-            scrollToProductType(ProductType.DESSERT)
-        }
 
         val drinkChip = view.findViewById<Chip>(R.id.home_chip_drink)
-        drinkChip.setOnClickListener {
-            motionRoot.transitionToEnd()
-            scrollToProductType(ProductType.DRINK)
-        }
+
 
         val productsAdapter = ProductListAdapter(requireContext(), onProductClick)
         productList?.adapter = productsAdapter
@@ -83,10 +80,11 @@ class HomeFragment : BaseFragment() {
             when (state) {
                 is StateModel.Success -> {
                     val products = state.data
-                    pizzaStartIndex = homeViewModel.productsStartIndices[ProductType.PIZZA] ?: -1
-                    comboStartIndex = homeViewModel.productsStartIndices[ProductType.COMBO] ?: -1
-                    dessertStartIndex = homeViewModel.productsStartIndices[ProductType.DESSERT] ?: -1
-                    drinkStartIndex = homeViewModel.productsStartIndices[ProductType.DRINK] ?: -1
+                    pizzaStartIndex = homeViewModel.productsStartIndices[ProductType.PIZZA] ?: NOT_INIT
+                    comboStartIndex = homeViewModel.productsStartIndices[ProductType.COMBO] ?: NOT_INIT
+                    dessertStartIndex =
+                        homeViewModel.productsStartIndices[ProductType.DESSERT] ?: NOT_INIT
+                    drinkStartIndex = homeViewModel.productsStartIndices[ProductType.DRINK] ?: NOT_INIT
 
                     pizzaChip.isEnabled = true
                     comboChip.isEnabled = true
@@ -94,6 +92,8 @@ class HomeFragment : BaseFragment() {
                     drinkChip.isEnabled = true
 
                     productsAdapter.setList(products)
+                    productList?.setHasFixedSize(true)
+
                 }
                 is StateModel.Loading -> {
                     //Handle loading state
@@ -107,36 +107,89 @@ class HomeFragment : BaseFragment() {
             }
         }
 
-        homeViewModel.requestBannersList()
-        homeViewModel.requestProductList()
-//        TODO() - motion layout transit  chips choose one  scroll problems offline mode
+        requestData()
+
+        pizzaChip.setOnClickListener {
+            if (motionRoot.currentState == R.id.start)
+                motionRoot.transitionToEnd()
+            scrollToProductType(ProductType.PIZZA)
+        }
+
+        comboChip.setOnClickListener {
+            if (motionRoot.currentState == R.id.start)
+                motionRoot.transitionToEnd()
+            scrollToProductType(ProductType.COMBO)
+        }
+
+        dessertChip.setOnClickListener {
+            if (motionRoot.currentState == R.id.start)
+                motionRoot.transitionToEnd()
+            scrollToProductType(ProductType.DESSERT)
+        }
+
+        drinkChip.setOnClickListener {
+            if (motionRoot.currentState == R.id.start)
+                motionRoot.transitionToEnd()
+            scrollToProductType(ProductType.DRINK)
+        }
+
     }
 
-    private var pizzaStartIndex = -1
-    private var comboStartIndex = -1
-    private var dessertStartIndex = -1
-    private var drinkStartIndex = -1
+    private fun requestData() {
+        val isOnline = requireContext().isOnline()
+        if (!isOnline)
+            loadingIndicator?.showErrorNotification()
+        homeViewModel.requestBannersList(isOnline)
+        homeViewModel.requestProductList(isOnline)
+    }
+
+    private var pizzaStartIndex = NOT_INIT
+    private var comboStartIndex = NOT_INIT
+    private var dessertStartIndex = NOT_INIT
+    private var drinkStartIndex = NOT_INIT
 
 
     private fun scrollToProductType(productType: ProductType) {
         when (productType) {
             ProductType.COMBO -> {
-                if (pizzaStartIndex != -1)
-                    productList?.smoothScrollToPosition(comboStartIndex)
+                if (comboStartIndex != NOT_INIT) {
+                    (productList?.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+                        comboStartIndex,
+                        0
+                    )
+                }
             }
             ProductType.PIZZA -> {
-                if (pizzaStartIndex != -1)
-                    productList?.smoothScrollToPosition(pizzaStartIndex)
+                if (pizzaStartIndex != NOT_INIT) {
+                    (productList?.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+                        pizzaStartIndex,
+                        0
+                    )
+                }
             }
             ProductType.DESSERT -> {
-                if (dessertStartIndex != -1)
-                    productList?.smoothScrollToPosition(dessertStartIndex)
+                if (dessertStartIndex != NOT_INIT) {
+                    (productList?.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+                        dessertStartIndex,
+                        0
+                    )
+                }
+
             }
             ProductType.DRINK -> {
-                if (drinkStartIndex != -1)
-                    productList?.smoothScrollToPosition(drinkStartIndex)
+                if (drinkStartIndex != NOT_INIT) {
+                    (productList?.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+                        drinkStartIndex,
+                        0
+                    )
+                }
             }
         }
+    }
+
+    override fun onDetach() {
+        loadingIndicator = null
+        super.onDetach()
     }
 
 }

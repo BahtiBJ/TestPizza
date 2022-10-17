@@ -37,6 +37,11 @@ class HomeFragment : BaseFragment() {
         }
     }
 
+    private val pizzaChip by lazy { view?.findViewById<Chip>(R.id.home_chip_pizza) }
+    private val comboChip by lazy { view?.findViewById<Chip>(R.id.home_chip_combo) }
+    private val dessertChip by lazy { view?.findViewById<Chip>(R.id.home_chip_dessert) }
+    private val drinkChip by lazy { view?.findViewById<Chip>(R.id.home_chip_drink) }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         loadingIndicator = context as LoadingIndicator
@@ -44,7 +49,6 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val motionRoot = view.findViewById<MotionLayout>(R.id.home_root)
 
         val bannersList = view.findViewById<RecyclerView>(R.id.home_banner_list)
         val bannersAdapter = BannersListAdapter(requireContext(), onBannerClick)
@@ -64,15 +68,6 @@ class HomeFragment : BaseFragment() {
             }
         }
 
-        val pizzaChip = view.findViewById<Chip>(R.id.home_chip_pizza)
-
-        val comboChip = view.findViewById<Chip>(R.id.home_chip_combo)
-
-        val dessertChip = view.findViewById<Chip>(R.id.home_chip_dessert)
-
-        val drinkChip = view.findViewById<Chip>(R.id.home_chip_drink)
-
-
         val productsAdapter = ProductListAdapter(requireContext(), onProductClick)
         productList?.adapter = productsAdapter
 
@@ -86,10 +81,10 @@ class HomeFragment : BaseFragment() {
                         homeViewModel.productsStartIndices[ProductType.DESSERT] ?: NOT_INIT
                     drinkStartIndex = homeViewModel.productsStartIndices[ProductType.DRINK] ?: NOT_INIT
 
-                    pizzaChip.isEnabled = true
-                    comboChip.isEnabled = true
-                    dessertChip.isEnabled = true
-                    drinkChip.isEnabled = true
+                    pizzaChip?.isEnabled = true
+                    comboChip?.isEnabled = true
+                    dessertChip?.isEnabled = true
+                    drinkChip?.isEnabled = true
 
                     productsAdapter.setList(products)
                     productList?.setHasFixedSize(true)
@@ -99,36 +94,48 @@ class HomeFragment : BaseFragment() {
                     //Handle loading state
                 }
                 is StateModel.Error -> {
-                    pizzaChip.isEnabled = false
-                    comboChip.isEnabled = false
-                    dessertChip.isEnabled = false
-                    drinkChip.isEnabled = false
+                    pizzaChip?.isEnabled = false
+                    comboChip?.isEnabled = false
+                    dessertChip?.isEnabled = false
+                    drinkChip?.isEnabled = false
                 }
             }
         }
 
-        requestData()
 
-        pizzaChip.setOnClickListener {
-            if (motionRoot.currentState == R.id.start)
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        requestData()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val motionRoot = view?.findViewById<MotionLayout>(R.id.home_root)
+
+        pizzaChip?.setOnClickListener {
+            if (motionRoot?.currentState == R.id.start)
                 motionRoot.transitionToEnd()
             scrollToProductType(ProductType.PIZZA)
         }
 
-        comboChip.setOnClickListener {
-            if (motionRoot.currentState == R.id.start)
+        comboChip?.setOnClickListener {
+            if (motionRoot?.currentState == R.id.start)
                 motionRoot.transitionToEnd()
             scrollToProductType(ProductType.COMBO)
         }
 
-        dessertChip.setOnClickListener {
-            if (motionRoot.currentState == R.id.start)
+        dessertChip?.setOnClickListener {
+            if (motionRoot?.currentState == R.id.start)
                 motionRoot.transitionToEnd()
             scrollToProductType(ProductType.DESSERT)
         }
 
-        drinkChip.setOnClickListener {
-            if (motionRoot.currentState == R.id.start)
+        drinkChip?.setOnClickListener {
+            if (motionRoot?.currentState == R.id.start)
                 motionRoot.transitionToEnd()
             scrollToProductType(ProductType.DRINK)
         }

@@ -9,7 +9,6 @@ import com.bbj.testpizza.domain.models.BannerModel
 import com.bbj.testpizza.domain.models.ProductPreview
 import com.bbj.testpizza.domain.models.ProductType
 
-
 class FakeMenuRepositoryImpl(private val homeDatabaseDAO: HomeDatabaseDAO) :
     MenuRepository {
 
